@@ -46,6 +46,7 @@ class Points {
       let sibling = document.querySelectorAll(this.pointsSiblingIdentifier)[0];
       if(username && sibling){
         this.username = username.innerText.toLowerCase();
+        console.log('Found username: ', this.username);
         sibling.insertAdjacentHTML('afterEnd', '<div id="' + this.id + '" class="tw-flex tw-flex-row"></div>');
         this.getUser();
       }
@@ -69,6 +70,7 @@ class Points {
   }
 
   getPoints() {
+    console.log('Updating points');
     SlawAPI.getPoints(this.username).then(json => {
       const points = Math.floor(json.currentPoints);
       const container = document.querySelectorAll('#' + this.id + ' .points')[0];
@@ -82,6 +84,7 @@ class Points {
   }
 
   getUser() {
+    console.log('Requesting points for the first time');
     let container = document.querySelectorAll('#' + this.id)[0];
 
     SlawAPI.getCultist(this.username).then(json => {
@@ -98,6 +101,7 @@ class Points {
     }).catch(err => {
       //depending on error, use this.interval to refetch follower
       //  for now don't check for the cause
+      console.log('Error while fetching points: ', err);
       clearInterval(this.interval);
       this.interval = window.setInterval(this.getUser.bind(this), 360000);
     });

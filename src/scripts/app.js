@@ -1,7 +1,9 @@
 // manifest.json's `run_at` declaration acts as a DOM ready listener
 //  when set to "document_end" so the whole script in run only then
+console.log('loading...');
 const context = getContext();
 const system = getSystem();
+console.log({context});
 
 const CHAT_ONLY = context === 'chat';
 
